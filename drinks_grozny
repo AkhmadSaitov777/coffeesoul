@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DRINKS — Bar & Burgeria | Грозный</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #D4A017;
+    --gold-light: #F0C040;
+    --gold-dark: #8B6914;
+    --black: #0A0A0A;
+    --dark: #111111;
+    --dark2: #1A1A1A;
+    --red: #C0392B;
+    --cream: #F5E6C8;
+    --text: #E8D5A0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
+    backdrop-filter: blur(2px);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 4px;
+    color: var(--gold-light);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
+    color: var(--text);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--black) !important;
+    padding: 10px 24px;
+    font-weight: 600 !important;
+    letter-spacing: 2px !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--black) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(212,160,23,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 70%, rgba(192,57,43,0.12) 0%, transparent 60%),
+      #0A0A0A;
+  }
+
+  /* Crack lines decoration */
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M300 0 L320 200 L280 400 L340 700 L300 1000' stroke='%23D4A01720' stroke-width='1' fill='none'/%3E%3Cpath d='M700 100 L720 350 L680 550 L740 800' stroke='%23D4A01715' stroke-width='0.5' fill='none'/%3E%3C/svg%3E");
+  }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    z-index: 2;
+    animation: heroIn 1.2s ease-out forwards;
+  }
+
+  @keyframes heroIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 6px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding: 8px 20px;
+    border: 1px solid rgba(212,160,23,0.4);
+    animation: heroIn 1.2s ease-out 0.2s both;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 15vw, 14rem);
+    line-height: 0.85;
+    letter-spacing: 2px;
+    color: #fff;
+    text-shadow: 0 0 80px rgba(212,160,23,0.3);
+    animation: heroIn 1.2s ease-out 0.3s both;
+  }
+
+  .hero-title span {
+    color: var(--gold-light);
+    display: block;
+    font-size: clamp(2rem, 6vw, 5rem);
+    letter-spacing: 12px;
+    margin-top: -10px;
+  }
+
+  .hero-sub {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    letter-spacing: 8px;
+    color: rgba(232,213,160,0.7);
+    text-transform: uppercase;
+    margin: 24px 0 40px;
+    animation: heroIn 1.2s ease-out 0.4s both;
+  }
+
+  .hero-halal {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+    animation: heroIn 1.2s ease-out 0.5s both;
+  }
+
+  .hero-halal::before, .hero-halal::after {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 40px;
+    animation: heroIn 1.2s ease-out 0.6s both;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    padding: 16px 40px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold-light);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary span { position: relative; z-index: 1; }
+
+  .btn-outline {
+    border: 1px solid rgba(212,160,23,0.5);
+    color: var(--text);
+    padding: 16px 40px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    background: rgba(212,160,23,0.08);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: bounce 2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  .hero-scroll span {
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    color: rgba(212,160,23,0.5);
+    text-transform: uppercase;
+  }
+
+  .hero-scroll::after {
+    content: '';
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+
+  /* SECTION COMMON */
+  section {
+    padding: 100px 60px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 70px;
+  }
+
+  .section-eyebrow {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 6px;
+    color: var(--gold);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1;
+    color: #fff;
+    letter-spacing: 2px;
+  }
+
+  .section-divider {
+    width: 60px; height: 2px;
+    background: var(--gold);
+    margin: 20px auto 0;
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    background: var(--gold);
+    padding: 24px 60px;
+    overflow: hidden;
+  }
+
+  .about-ticker {
+    display: flex;
+    gap: 60px;
+    animation: ticker 20s linear infinite;
+    white-space: nowrap;
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  .about-ticker span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 4px;
+    color: var(--black);
+  }
+
+  .about-ticker .dot {
+    color: rgba(0,0,0,0.4);
+    font-size: 1.5rem;
+  }
+
+  /* MENU SECTION */
+  .menu-section {
+    background: var(--dark);
+    position: relative;
+  }
+
+  .menu-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
+  }
+
+  .menu-tab {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 12px 24px;
+    background: transparent;
+    border: 1px solid rgba(212,160,23,0.2);
+    color: rgba(232,213,160,0.5);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .menu-tab.active, .menu-tab:hover {
+    background: var(--gold);
+    color: var(--black);
+    border-color: var(--gold);
+  }
+
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .menu-item {
+    background: var(--dark2);
+    padding: 28px;
+    position: relative;
+    transition: all 0.3s;
+    border-left: 2px solid transparent;
+    overflow: hidden;
+  }
+
+  .menu-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(212,160,23,0.05) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .menu-item:hover {
+    border-left-color: var(--gold);
+    transform: translateX(4px);
+  }
+
+  .menu-item:hover::before { opacity: 1; }
+
+  .menu-item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+
+  .menu-item-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #fff;
+    text-transform: uppercase;
+    flex: 1;
+  }
+
+  .menu-item-name-en {
+    font-size: 0.7rem;
+    color: rgba(232,213,160,0.4);
+    letter-spacing: 2px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    margin-bottom: 6px;
+  }
+
+  .menu-item-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    color: var(--gold-light);
+    letter-spacing: 1px;
+    white-space: nowrap;
+    margin-left: 16px;
+  }
+
+  .menu-item-price .rub {
+    font-size: 1rem;
+    color: var(--gold-dark);
+  }
+
+  .menu-item-desc {
+    font-size: 0.8rem;
+    color: rgba(232,213,160,0.4);
+    line-height: 1.5;
+    font-weight: 300;
+  }
+
+  .menu-item-badge {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    padding: 3px 8px;
+    margin-top: 10px;
+    text-transform: uppercase;
+  }
+
+  .menu-list-section {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .menu-list-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--gold-light);
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    margin-top: 40px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(212,160,23,0.2);
+  }
+
+  .menu-list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: all 0.2s;
+  }
+
+  .menu-list-item:hover { padding-left: 12px; }
+
+  .menu-list-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #fff;
+  }
+
+  .menu-list-name-en {
+    font-size: 0.75rem;
+    color: rgba(232,213,160,0.35);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    margin-left: 8px;
+  }
+
+  .menu-list-dots {
+    flex: 1;
+    height: 1px;
+    background: repeating-linear-gradient(90deg, rgba(212,160,23,0.2) 0, rgba(212,160,23,0.2) 4px, transparent 4px, transparent 8px);
+    margin: 0 16px;
+  }
+
+  .menu-list-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--gold-light);
+    white-space: nowrap;
+  }
+
+  .menu-list-size {
+    font-size: 0.7rem;
+    color: rgba(232,213,160,0.4);
+    margin-right: 6px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--dark2);
+    padding: 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    border-top: 1px solid rgba(212,160,23,0.1);
+    border-bottom: 1px solid rgba(212,160,23,0.1);
+  }
+
+  .stat {
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+  }
+
+  .stat + .stat::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 20%; bottom: 20%;
+    width: 1px;
+    background: rgba(212,160,23,0.15);
+  }
+
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: var(--gold-light);
+    display: block;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    color: rgba(232,213,160,0.5);
+    text-transform: uppercase;
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* CONTACTS */
+  .contacts-section {
+    background: var(--black);
+    position: relative;
+  }
+
+  .contacts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .contact-block {
+    padding: 50px;
+    border: 1px solid rgba(212,160,23,0.15);
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .contact-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--gold);
+    transition: width 0.4s;
+  }
+
+  .contact-block:hover::before { width: 100%; }
+  .contact-block:hover { border-color: rgba(212,160,23,0.3); }
+
+  .contact-icon {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .contact-address-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .contact-address-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    color: #fff;
+    line-height: 1.7;
+  }
+
+  .contact-phone {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    display: block;
+    text-decoration: none;
+    margin-top: 16px;
+    transition: color 0.3s;
+  }
+
+  .contact-phone:hover { color: var(--gold-light); }
+
+  .contact-hours {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: rgba(212,160,23,0.08);
+    border-left: 2px solid var(--gold);
+  }
+
+  .contact-hours-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+  }
+
+  .contact-hours-sub {
+    font-size: 0.8rem;
+    color: rgba(232,213,160,0.4);
+    margin-top: 4px;
+    letter-spacing: 2px;
+    font-family: 'Oswald', sans-serif;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #050505;
+    padding: 50px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(212,160,23,0.1);
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    color: var(--gold-light);
+  }
+
+  .footer-sub {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    color: rgba(232,213,160,0.3);
+    text-transform: uppercase;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-social a {
+    width: 44px; height: 44px;
+    border: 1px solid rgba(212,160,23,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(232,213,160,0.5);
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+  }
+
+  .footer-social a:hover {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    background: rgba(212,160,23,0.08);
+  }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: rgba(232,213,160,0.2);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+
+  /* ORDER BANNER */
+  .order-banner {
+    background: var(--gold);
+    padding: 50px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .order-banner::before {
+    content: 'ЗАКАЗАТЬ';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20rem;
+    color: rgba(0,0,0,0.08);
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+    letter-spacing: 20px;
+  }
+
+  .order-banner-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    color: var(--black);
+    letter-spacing: 4px;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 8px;
+  }
+
+  .order-banner-sub {
+    font-family: 'Oswald', sans-serif;
+    color: rgba(0,0,0,0.6);
+    letter-spacing: 4px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 30px;
+  }
+
+  .order-phones {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .order-phone {
+    background: var(--black);
+    color: var(--gold-light);
+    padding: 14px 30px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    text-decoration: none;
+    transition: all 0.3s;
+  }
+
+  .order-phone:hover {
+    background: #1a1a1a;
+    transform: translateY(-3px);
+  }
+
+  /* Halal badge */
+  .halal-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+    border: 1px solid rgba(212,160,23,0.3);
+    padding: 6px 14px;
+    margin-left: 16px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 70px 24px; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 40px 24px; }
+    .contacts-grid { grid-template-columns: 1fr; gap: 24px; }
+    .order-banner { padding: 40px 24px; }
+    .order-phones { flex-direction: column; align-items: center; }
+    footer { flex-direction: column; gap: 24px; text-align: center; }
+    .about-strip { padding: 20px 24px; }
+  }
+
+  /* Scroll animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">DRINKS</a>
+  <ul class="nav-links">
+    <li><a href="#menu">Меню</a></li>
+    <li><a href="#contacts">Адреса</a></li>
+    <li><a href="#contacts">Режим работы</a></li>
+    <li><a href="https://instagram.com/drinks_grozny" target="_blank" class="nav-cta">Instagram</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Грозный · Халяль · С 2018</div>
+    <h1 class="hero-title">
+      DRINKS
+      <span>BAR & BURGERIA</span>
+    </h1>
+    <p class="hero-sub">Сытные бургеры · Свежее мясо · Доставка</p>
+    <div class="hero-halal">
+      ☪ Сертифицированная халяль продукция
+    </div>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary"><span>Смотреть меню</span></a>
+      <a href="#contacts" class="btn-outline">Адреса</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span></div>
+</section>
+
+<!-- TICKER -->
+<div class="about-strip">
+  <div class="about-ticker">
+    <span>БУРГЕРЫ</span><span class="dot">◆</span>
+    <span>ШАУРМА</span><span class="dot">◆</span>
+    <span>КОКТЕЙЛИ</span><span class="dot">◆</span>
+    <span>ХАЛЯЛЬ</span><span class="dot">◆</span>
+    <span>ДОСТАВКА</span><span class="dot">◆</span>
+    <span>ГРОЗНЫЙ</span><span class="dot">◆</span>
+    <span>КОФЕ</span><span class="dot">◆</span>
+    <span>СМУЗИ</span><span class="dot">◆</span>
+    <span>СТРИПСЫ</span><span class="dot">◆</span>
+    <span>НАГГЕТСЫ</span><span class="dot">◆</span>
+    <!-- repeat for infinite scroll -->
+    <span>БУРГЕРЫ</span><span class="dot">◆</span>
+    <span>ШАУРМА</span><span class="dot">◆</span>
+    <span>КОКТЕЙЛИ</span><span class="dot">◆</span>
+    <span>ХАЛЯЛЬ</span><span class="dot">◆</span>
+    <span>ДОСТАВКА</span><span class="dot">◆</span>
+    <span>ГРОЗНЫЙ</span><span class="dot">◆</span>
+    <span>КОФЕ</span><span class="dot">◆</span>
+    <span>СМУЗИ</span><span class="dot">◆</span>
+    <span>СТРИПСЫ</span><span class="dot">◆</span>
+    <span>НАГГЕТСЫ</span><span class="dot">◆</span>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat reveal">
+    <span class="stat-number">100%</span>
+    <span class="stat-label">Халяль мясо</span>
+  </div>
+  <div class="stat reveal">
+    <span class="stat-number">13.7K</span>
+    <span class="stat-label">Подписчиков</span>
+  </div>
+  <div class="stat reveal">
+    <span class="stat-number">2</span>
+    <span class="stat-label">Ресторана</span>
+  </div>
+  <div class="stat reveal">
+    <span class="stat-number">14ч</span>
+    <span class="stat-label">Ежедневно открыты</span>
+  </div>
+</div>
+
+<!-- MENU -->
+<section class="menu-section" id="menu">
+  <div class="section-header reveal">
+    <span class="section-eyebrow">Наше меню</span>
+    <h2 class="section-title">ЧТО МЫ ГОТОВИМ</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="menu-tabs">
+    <button class="menu-tab active" onclick="showMenu('burgers')">Бургеры</button>
+    <button class="menu-tab" onclick="showMenu('mini')">Мини бургеры</button>
+    <button class="menu-tab" onclick="showMenu('chicken')">Курица & Шаурма</button>
+    <button class="menu-tab" onclick="showMenu('drinks')">Напитки</button>
+    <button class="menu-tab" onclick="showMenu('extras')">Добавки</button>
+  </div>
+
+  <!-- BURGERS -->
+  <div class="menu-panel active" id="panel-burgers">
+    <div class="menu-grid">
+      <div class="menu-item reveal">
+        <div class="menu-item-name-en">TruelBurger</div>
+        <div class="menu-item-top">
+          <div class="menu-item-name">Трубургер</div>
+          <div class="menu-item-price">395<span class="rub">₽</span></div>
+        </div>
+        <div class="menu-item-desc">Классический бургер на фирменной булке</div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-name-en">DoubleTrueBurger</div>
+        <div class="menu-item-top">
+          <div class="menu-item-name">Даблтру</div>
+          <div class="menu-item-price">570<span class="rub">₽</span></div>
+        </div>
+        <div class="menu-item-desc">Двойная котлета, двойное удовольствие</div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-name-en">TripleTrueBurger</div>
+        <div class="menu-item-top">
+          <div class="menu-item-name">Триплтру</div>
+          <div class="menu-item-price">790<span class="rub">₽</span></div>
+        </div>
+        <div class="menu-item-desc">Тройная котлета — для настоящих</div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-name-en">BlackTrue</div>
+        <div class="menu-item-top">
+          <div class="menu-item-name">Блэктру</div>
+          <div class="menu-item-price">500<span class="rub">₽</span></div>
+        </div>
+        <div class="menu-item-desc">На чёрной булке — стильно и вкусно</div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-name-en">SpicyTrue</div>
+        <div class="menu-item-top">
+          <div class="menu-item-name">Спайситру</div>
+          <div class="menu-item-price">500<span class="rub">₽</span></div>
+        </div>
+        <div class="menu-item-desc">Острый соус — для любителей жара</div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-name-en">TrueBBQ</div>
+        <div class="menu-item-top">
+          <div class="menu-item-name">Трубарбекю</div>
+          <div class="menu-item-price">500<span class="rub">₽</span></div>
+        </div>
+        <div class="menu-item-desc">С дымным соусом барбекю</div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-name-en">TrueTasty</div>
+        <div class="menu-item-top">
+          <div class="menu-item-name">Трутзисти</div>
+          <div class="menu-item-price">500<span class="rub">₽</span></div>
+        </div>
+        <div class="menu-item-desc">Новинка в меню</div>
+        <span class="menu-item-badge">NEW</span>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-name-en">CheeseBurger</div>
+        <div class="menu-item-top">
+          <div class="menu-item-name">Чизбургер</div>
+          <div class="menu-item-price">395<span class="rub">₽</span></div>
+        </div>
+        <div class="menu-item-desc">Классика с сыром</div>
+        <span class="menu-item-badge">NEW</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MINI BURGERS -->
+  <div class="menu-panel" id="panel-mini">
+    <div class="menu-grid">
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Минитру</div>
+          <div class="menu-item-price">290<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Минидабл</div>
+          <div class="menu-item-price">415<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Минитрипл</div>
+          <div class="menu-item-price">580<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Миниспайси</div>
+          <div class="menu-item-price">355<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Минибарбекю</div>
+          <div class="menu-item-price">355<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Миничизбургер</div>
+          <div class="menu-item-price">290<span class="rub">₽</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="max-width:1200px; margin: 40px auto 0; padding: 0;">
+      <div class="section-eyebrow" style="text-align:center; margin-bottom: 20px;">Картошка & Снэки</div>
+      <div class="menu-grid">
+        <div class="menu-item reveal">
+          <div class="menu-item-top">
+            <div class="menu-item-name">Сырные палочки</div>
+            <div class="menu-item-price">210<span class="rub">₽</span></div>
+          </div>
+        </div>
+        <div class="menu-item reveal">
+          <div class="menu-item-top">
+            <div class="menu-item-name">Картофель фри</div>
+            <div class="menu-item-price">105<span class="rub">₽</span></div>
+          </div>
+        </div>
+        <div class="menu-item reveal">
+          <div class="menu-item-top">
+            <div class="menu-item-name">Картофель по-деревенски</div>
+            <div class="menu-item-price">105<span class="rub">₽</span></div>
+          </div>
+        </div>
+        <div class="menu-item reveal">
+          <div class="menu-item-top">
+            <div class="menu-item-name">Луковые кольца</div>
+            <div class="menu-item-price">340<span class="rub">₽</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHICKEN & SHAWARMA -->
+  <div class="menu-panel" id="panel-chicken">
+    <div class="menu-grid">
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Стрипсы 3 шт</div>
+          <div class="menu-item-price">270<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Стрипсы 6 шт</div>
+          <div class="menu-item-price">480<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Стрипсы 9 шт</div>
+          <div class="menu-item-price">585<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Шефбургер</div>
+          <div class="menu-item-price">450<span class="rub">₽</span></div>
+        </div>
+        <div class="menu-item-desc">С курицей</div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Мини Шефбургер</div>
+          <div class="menu-item-price">265<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Чилитру</div>
+          <div class="menu-item-price">500<span class="rub">₽</span></div>
+        </div>
+        <span class="menu-item-badge">NEW</span>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Мини Чилитру</div>
+          <div class="menu-item-price">315<span class="rub">₽</span></div>
+        </div>
+        <span class="menu-item-badge">NEW</span>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Шаурма Классическая</div>
+          <div class="menu-item-price">270<span class="rub">₽</span></div>
+        </div>
+        <div class="menu-item-desc">Куриная, пшеничная тортилья</div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Шаурма Острая</div>
+          <div class="menu-item-price">270<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Шаурма Мясная</div>
+          <div class="menu-item-price">370<span class="rub">₽</span></div>
+        </div>
+        <span class="menu-item-badge">NEW</span>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Твистер Стандарт</div>
+          <div class="menu-item-price">265<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Сэндвич с курицей</div>
+          <div class="menu-item-price">450<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Наггетсы Большие</div>
+          <div class="menu-item-price">480<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Наггетсы Малые</div>
+          <div class="menu-item-price">270<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Куриные крылышки</div>
+          <div class="menu-item-price">450<span class="rub">₽</span></div>
+        </div>
+      </div>
+      <div class="menu-item reveal">
+        <div class="menu-item-top">
+          <div class="menu-item-name">Хотдог</div>
+          <div class="menu-item-price">175<span class="rub">₽</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRINKS -->
+  <div class="menu-panel" id="panel-drinks">
+    <div class="menu-list-section">
+      <div class="menu-list-title">ЧАЙ (Tea)</div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Облепиховый <span class="menu-list-name-en">Sea buckthorn</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">490 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Имбирный <span class="menu-list-name-en">Ginger</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">490 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Глинтвейн <span class="menu-list-name-en">Mulled wine, non-alcoholic</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">490 ₽</span>
+      </div>
+
+      <div class="menu-list-title">КОФЕ (Coffee)</div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Эспрессо</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">170 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Американо</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">170 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Капучино <span class="menu-list-size">0.3 / 0.4</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">255 / 300 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Латте <span class="menu-list-size">0.3 / 0.4</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">255 / 300 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Флэт Уайт <span class="menu-list-size">0.3</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">290 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Раф ванильный <span class="menu-list-size">0.3 / 0.4</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">345 / 400 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Горячий шоколад <span class="menu-list-size">0.3 / 0.4</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">275 / 315 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Айс Латте <span class="menu-list-size">0.4 / 0.5</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">300 / 365 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Айс Кофе с урбечем <span class="menu-list-size">0.4 / 0.5</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">350 / 400 ₽</span>
+      </div>
+
+      <div class="menu-list-title">КОКТЕЙЛИ (Milkshakes)</div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Сникерс <span class="menu-list-size">0.4 / 0.5</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">375 / 450 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Орео <span class="menu-list-size">0.4 / 0.5</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">375 / 450 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Медовый с печеньем <span class="menu-list-size">0.4 / 0.5</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">375 / 450 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Клубничный <span class="menu-list-size">0.4 / 0.5</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">375 / 450 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Банановый <span class="menu-list-size">0.4 / 0.5</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">375 / 450 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Шоколадный <span class="menu-list-size">0.4 / 0.5</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">375 / 450 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">БаблГам <span class="menu-list-size">0.4 / 0.5</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">375 / 450 ₽</span>
+      </div>
+
+      <div class="menu-list-title">СМУЗИ БЕЗ САХАРА (Sugar free)</div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Энерджайзер <span class="menu-list-name-en">Яблочный фреш, грейпфрут, имбирь</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">410 / 490 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Банана Репаблик <span class="menu-list-name-en">Яблоко, клубника, банан</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">410 / 490 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Айрон Мэн <span class="menu-list-name-en">Яблоко, банан, киви</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">410 / 490 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Черничный <span class="menu-list-name-en">Яблоко, банан, черника</span></span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">410 / 490 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Фреш Апельсиновый</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">410 / 490 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Фреш Яблочный</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">410 / 490 ₽</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXTRAS -->
+  <div class="menu-panel" id="panel-extras">
+    <div class="menu-list-section">
+      <div class="menu-list-title">ДОБАВКИ К БУРГЕРУ</div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Котлета (Meat)</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">190 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Сыр (Cheese)</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">35 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Яйцо (Egg)</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">40 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Халапеньо (Jalapeno)</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">60 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Луковые кольца (Onion rings)</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">85 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Соус Спайси (Spicy sauce)</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">75 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Сырные палочки (Cheese sticks)</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">140 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Добавить овощей в шаурму</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">30 ₽</span>
+      </div>
+
+      <div class="menu-list-title">СОУСЫ (Sauces)</div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Кетчуп</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">60 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Горчица</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">60 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Сырный</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">80 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Кисло-сладкий</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">60 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Барбекю</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">60 ₽</span>
+      </div>
+      <div class="menu-list-item reveal">
+        <span class="menu-list-name">Чесночный</span>
+        <div class="menu-list-dots"></div>
+        <span class="menu-list-price">60 ₽</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORDER BANNER -->
+<div class="order-banner" id="order">
+  <h2 class="order-banner-title">ЗАКАЗАТЬ ПРЯМО СЕЙЧАС</h2>
+  <p class="order-banner-sub">Звони — привезём или ждём тебя</p>
+  <div class="order-phones">
+    <a href="tel:+79889088843" class="order-phone">8 988 908-88-43</a>
+    <a href="tel:+79889088844" class="order-phone">8 988 908-88-44</a>
+    <a href="tel:+79889088845" class="order-phone">8 988 908-88-45</a>
+  </div>
+</div>
+
+<!-- CONTACTS -->
+<section class="contacts-section" id="contacts">
+  <div class="section-header reveal">
+    <span class="section-eyebrow">Где нас найти</span>
+    <h2 class="section-title">АДРЕСА</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="contacts-grid">
+    <div class="contact-block reveal">
+      <span class="contact-icon">📍</span>
+      <div class="contact-address-title">ТОЧКА 1</div>
+      <div class="contact-address-text">
+        г. Грозный<br>
+        ул. Кабардинская, 4
+      </div>
+      <a href="tel:+79889088843" class="contact-phone">8 988 908-88-43</a>
+      <div class="contact-hours">
+        <div class="contact-hours-text">10:00 — 00:00</div>
+        <div class="contact-hours-sub">Ежедневно · Без выходных</div>
+      </div>
+    </div>
+    <div class="contact-block reveal">
+      <span class="contact-icon">📍</span>
+      <div class="contact-address-title">ТОЧКА 2</div>
+      <div class="contact-address-text">
+        г. Грозный<br>
+        б-р Эсамбаева, 6
+      </div>
+      <a href="tel:+79889088844" class="contact-phone">8 988 908-88-44</a>
+      <div class="contact-hours">
+        <div class="contact-hours-text">10:00 — 00:00</div>
+        <div class="contact-hours-sub">Ежедневно · Без выходных</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">DRINKS</div>
+    <div class="footer-sub">Bar & Burgeria · Грозный</div>
+  </div>
+  <div class="footer-social">
+    <a href="https://instagram.com/drinks_grozny" target="_blank" title="Instagram">📷</a>
+    <a href="tel:+79889088843" title="Позвонить">📞</a>
+  </div>
+  <div class="footer-copy">© 2024 Drinks Bar & Burgeria<br>Все права защищены</div>
+</footer>
+
+<script>
+  // Menu tabs
+  function showMenu(panel) {
+    document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + panel).classList.add('active');
+    event.target.classList.add('active');
+    // Re-trigger reveal for newly visible items
+    setTimeout(checkReveal, 50);
+  }
+
+  // Scroll reveal
+  function checkReveal() {
+    document.querySelectorAll('.reveal').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 60) {
+        el.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', checkReveal);
+  checkReveal();
+</script>
+
+</body>
+</html>
